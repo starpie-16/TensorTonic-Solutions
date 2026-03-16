@@ -1,0 +1,19 @@
+import numpy as np
+
+def cosine_similarity(a, b):
+    """
+    Compute cosine similarity between two 1D NumPy arrays.
+    Returns: float in [-1, 1]
+    """
+    # Write code here
+    a = np.array(a)
+    b = np.array(b)
+
+    dot_product = np.dot(a, b)
+    norm_a = np.linalg.norm(a)
+    norm_b = np.linalg.norm(b)
+
+    cs = dot_product / (norm_a * norm_b + 1e-8 )
+    return cs
+    
+    pass
