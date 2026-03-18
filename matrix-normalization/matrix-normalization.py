@@ -18,6 +18,8 @@ def matrix_normalization(matrix, axis=None, norm_type='l2'):
 
     if norm_type not in ['l1', 'l2', 'max']:
         return None
+
+
     
     if axis is None:
         if norm_type == 'l2':
@@ -61,7 +63,26 @@ def matrix_normalization(matrix, axis=None, norm_type='l2'):
     return np.nan_to_num(matrix_norm)
         
             
-        
+
+    """
+    import numpy as np
+
+def matrix_normalization(matrix, axis=None, norm_type='l2'):
+    # 1. Chuyển thành mảng 2D float, check ngay ndim và tham số
+    mat = np.array(matrix, dtype=float)
+    valid_norms = {'l1': 1, 'l2': 2, 'max': np.inf}
+    
+    if mat.ndim != 2 or axis not in [None, 0, 1] or norm_type not in valid_norms:
+        return None
+
+    # 2. Tính norm bằng đúng 1 dòng (dùng keepdims=True để cân mọi axis)
+    norm = np.linalg.norm(mat, ord=valid_norms[norm_type], axis=axis, keepdims=True)
+    
+    # 3. Chia và xử lý lỗi chia cho 0 (nan) bằng np.where
+    # Nếu norm = 0 thì giữ nguyên 0, ngược lại thì thực hiện phép chia
+    return np.where(norm != 0, mat / norm, 0.0)
+
+    """
         
     
     pass
