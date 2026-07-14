@@ -7,26 +7,21 @@ def pad_sequences(seqs, pad_value=0, max_len=None):
       L = max_len if provided else max(len(seq) for seq in seqs) or 0
     """
     # Your code here
-    lens = np.array([len(s) for s in seqs])
-
+    
+    max_sent = max(len(seq) for seq in seqs)
+    
     if max_len is None:
-        target_len = lens.max()
-    else:
-        target_len = max_len
+        max_len = max_sent
         
 
-    truncated_seqs = [np.array(s[:target_len]) for s in seqs]
+    pad_sent = np.full((len(seqs), max_len), fill_value = pad_value)
 
-    final_lens = np.minimum(lens, target_len)
+    for i, sent in enumerate(seqs):
+        trunc_len = min(len(sent), max_len)
+        pad_sent[i, :trunc_len] = sent[:trunc_len]
 
-    mask = np.arange(target_len) < final_lens[:, None]
+    return pad_sent        
 
-    res = np.full((len(seqs), target_len), pad_value, dtype=int)
-    
-    res[mask] = np.concatenate(truncated_seqs)
-
-    return res
     
     
-                      
     pass
